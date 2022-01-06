@@ -187,6 +187,87 @@ class TREE_Maker: #arborele e terminat
         return tree
 
 
+class Parser:
+    def __init__(self):
+        self.lexer = Lexer()
+
+    def parse(self, expression):
+
+        node = None
+        token = self.lexer.Give_token(expression)
+
+        if token:
+            node = self.creare_n(token.pop(), token)
+        if node == -1 or len(token) != 0:
+            print("Syntax error")
+            return
+        return node
+
+    def creare_n(self, token, tokens):
+        try:
+            if Type_Tokens.DIV == token.type:
+                left_c = self.creare_n(tokens.pop(), tokens)
+                right_c = self.creare_n(tokens.pop(), tokens)
+                return Node(Type_n.DIV, left_c, right_c)
+
+            elif  Type_Tokens.MUL ==token.type:
+                left_c = self.creare_n(tokens.pop(), tokens)
+                right_c = self.creare_n(tokens.pop(), tokens)
+                return Node(Type_n.MUL, left_c, right_c)
+
+            elif  Type_Tokens.ADD== token.type:
+                left_c = self.creare_n(tokens.pop(), tokens)
+                right_c = self.creare_n(tokens.pop(), tokens)
+
+                return Node(Type_n.ADD, left_c, right_c)
+            elif Type_Tokens.SUB == token.type:
+                left_c = self.creare_n(tokens.pop(), tokens)
+                right_c = self.creare_n(tokens.pop(), tokens)
+                return Node(Type_n.SUB, left_c, right_c)
+
+            elif Type_Tokens.SIN==token.type:
+                left_c=self.creare_n(tokens.pop(), tokens)
+                right_c=None
+                return Node(Type_n.SIN, left_c, right_c)
+
+            elif  Type_Tokens.POWER ==token.type:
+                left_c = self.creare_n(tokens.pop(), tokens)
+                right_c = self.creare_n(tokens.pop(), tokens)
+                return Node(Type_n.POWER, left_c, right_c)
+
+
+            elif Type_Tokens.COS==token.type:
+                left_c=self.creare_n(tokens.pop(), tokens)
+                right_c=None
+                return Node(Type_n.COS, left_c, right_c)
+
+            elif Type_Tokens.TG==token.type:
+                left_c=self.creare_n(tokens.pop(), tokens)
+                right_c=None
+                return Node(Type_n.TG, left_c, right_c)
+
+            elif Type_Tokens.CTG==token.type:
+                left_c=self.creare_n(tokens.pop(), tokens)
+                right_c=None
+                return Node(Type_n.CTG, left_c, right_c)
+
+            elif Type_Tokens.RAD==token.type:
+                left_c=self.creare_n(tokens.pop(), tokens)
+                right_c=None
+                return Node(Type_n.RAD, left_c, right_c)
+
+            elif Type_Tokens.LOG==token.type:
+                left_c=self.creare_n(tokens.pop(), tokens)
+                right_c=None
+                return Node(Type_n.LOG, left_c, right_c)
+
+            elif  Type_Tokens.NUMBER== token.type:
+                return Node(Type_n.NUMBER, None, None, token.value)
+        except IndexError:
+            return -1
+
+
+
 class Interpreter:
     def __init__(self):
         self.parser = Parser()
