@@ -201,6 +201,7 @@ class Parser:
     def __init__(self):
         self.lexer = Lexer()
 
+    #functia de parsare
     def parse(self, expression):
 
         node = None
@@ -208,12 +209,15 @@ class Parser:
 
         if token:
             node = self.creare_n(token.pop(), token)
+
         if node == -1 or len(token) != 0:
-            print("Syntax error")
+            print("Syntax error2")
             return
         return node
 
     def creare_n(self, token, tokens):
+
+        #crearea nodurilor
         try:
             if Type_Tokens.DIV == token.type:
                 left_c = self.creare_n(tokens.pop(), tokens)
@@ -281,7 +285,7 @@ class Parser:
 class Interpreter:
     def __init__(self):
         self.parser = Parser()
-
+    # rezolvarea arborelui
     def get_value(self, node):
         if  Type_n.MUL== node.type:
             return self.get_value(node.right_child) * self.get_value(node.left_child)
@@ -308,7 +312,7 @@ class Interpreter:
         elif Type_n.CTG == node.type:
             return 1-math.tan(self.get_value(node.left_child))
 
-
+    #functia de apelare pt rezolvarea expresiei
     def rezolv(self, expression):
         rez = self.parser.parse(expression)
         if rez:
