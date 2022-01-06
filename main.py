@@ -95,19 +95,21 @@ class Lexer:
 
 # clasa in care construim arborele parcurgand expresia caracter cu caracter
 class TREE_Maker:
-
+    # functia cu care parcurgem expresia si ne ajuta sa trecem la urmatorul caracter
     def nextnode(self, exp_iter):
         try:
             return next(exp_iter)
         except StopIteration:
             return None
-
+    # functia in care construim arborele
     def TREE(self, expression):
 
         tree = []
+        #daca exista expresia atunci o iteram in iter_expr pt a putea parcurge mai usor caracterele
         if expression:
             iter_expr = iter(expression)
             paran = 0
+            #incepem cu primul caracter
             string_expr = self.nextnode(iter_expr)
             list_op = []
             # cat timp sunt spatii si enter-uri le ignoram
