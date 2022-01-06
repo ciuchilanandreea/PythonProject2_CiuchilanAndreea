@@ -125,20 +125,21 @@ class TREE_Maker:
                         list_op.pop()
                     paran -= 1
                     string_expr = self.nextnode(iter_expr)
-
+                #calculam cate paranteze ( avem
                 elif "("==string_expr:
                     paran += 1
                     list_op.append(string_expr)
                     string_expr = self.nextnode(iter_expr)
 
 
-
+                # verificam ce string-uri avem in functie
+                #acestea ar trebui sa fie rad,tg,ctg,sin,cos,log,^^
                 elif string_expr in STRING:
                     text = ""
                     while string_expr != None and string_expr in STRING:
                         text += string_expr
                         string_expr = self.nextnode(iter_expr)
-
+                    # introducerea in lista a operatiilor
                     if "sin"==text:
                         list_op.append(text)
                     elif "cos"==text:
@@ -154,19 +155,19 @@ class TREE_Maker:
                     elif "^^"==text:
                         list_op.append(text)
                     else:
+                        # avem alt sir de caractere necunoscut
                         print("Syntax error 1")
                         return []
 
-
+                # formam numerele din expresie
                 elif string_expr in NUMBER:
                     nr = ""
-                    while string_expr != None and string_expr in NUMBER:
+                    while string_expr in NUMBER and string_expr != None:
                         nr += string_expr
                         string_expr = self.nextnode(iter_expr)
                     tree.append(nr)
 
-
-
+                # verificam operatiile +,-,/,*,^^, functii trigonometrice,log,rad tinand cont de ordinea efectuarii operatiilor
                 elif string_expr in "+-*/"or string_expr in STRING:
                     if not list_op:
                         list_op.append(string_expr)
