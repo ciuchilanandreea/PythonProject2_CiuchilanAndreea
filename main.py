@@ -90,6 +90,103 @@ class Lexer:
                     list.append(Token(Type_Tokens.CTG))
 
         return list
+
+class TREE_Maker: #arborele e terminat
+    def nextnode(self, exp_iter):
+        try:
+            return next(exp_iter)
+        except StopIteration:
+            return None
+
+    def TREE(self, expression):
+        tree = []
+        if expression:
+            iter_expr = iter(expression)
+            paran = 0
+            string_expr = self.nextnode(iter_expr)
+            list_op = []
+
+            while string_expr:
+                if string_expr in SPACE:
+                    string_expr = self.nextnode(iter_expr)
+                    continue
+
+
+                elif ")" ==string_expr:
+                    while list_op and list_op[-1] != "(":
+                        tree.append(list_op.pop())
+                    if list_op:
+                        list_op.pop()
+                    string_expr = self.nextnode(iter_expr)
+                    paran -= 1
+
+                elif "("==string_expr:
+                    list_op.append(string_expr)
+                    string_expr = self.nextnode(iter_expr)
+                    paran += 1
+
+
+                elif string_expr in STRING:
+                    text = ""
+                    while string_expr != None and string_expr in STRING:
+                        text += string_expr
+                        string_expr = self.nextnode(iter_expr)
+
+                    if "sin"==text:
+                        list_op.append(text)
+                    elif "cos"==text:
+                        list_op.append(text)
+                    elif "ctg"==text:
+                        list_op.append(text)
+                    elif "tg"==text:
+                        list_op.append(text)
+                    elif "rad"==text:
+                        list_op.append(text)
+                    elif "log"==text:
+                        list_op.append(text)
+                    elif "^^"==text:
+                        list_op.append(text)
+                    else:
+                        print("Syntax error 1")
+                        return []
+
+
+                elif string_expr in NUMBER:
+                    nr = ""
+                    while string_expr != None and string_expr in NUMBER:
+                        nr += string_expr
+                        string_expr = self.nextnode(iter_expr)
+                    tree.append(nr)
+
+
+
+                elif string_expr in "+-*/"or string_expr in STRING:
+                    if not list_op:
+                        list_op.append(string_expr)
+                    else:
+                        while string_expr in "+-*/":
+                            if list_op and string_expr in "+-" and( list_op[-1] in "+-*/" or list_op[-1] in STRING):
+                                tree.append(list_op.pop())
+                            elif list_op and string_expr in "*/" and ( list_op[-1] in "*/" or list_op[-1] in STRING):
+                                tree.append(list_op.pop())
+                            elif list_op and (string_expr in STRING) and (list_op[-1] in STRING):
+                                tree.append(list_op.pop())
+
+                            else:
+                                list_op.append(string_expr)
+                                break
+                    string_expr = self.nextnode(iter_expr)
+                else:
+                    print("Is unknown character")
+                    return []
+            if paran != 0:
+                print("Syntax error 1")
+                return []
+            while list_op:
+                tree.append(list_op.pop())
+        return tree
+
+
 class Interpreter:
     def __init__(self):
         self.parser = Parser()
