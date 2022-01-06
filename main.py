@@ -162,7 +162,7 @@ class TREE_Maker:
                 # formam numerele din expresie
                 elif string_expr in NUMBER:
                     nr = ""
-                    while string_expr in NUMBER and string_expr != None:
+                    while string_expr != None and string_expr in NUMBER:
                         nr += string_expr
                         string_expr = self.nextnode(iter_expr)
                     tree.append(nr)
@@ -310,7 +310,7 @@ class Interpreter:
         elif  Type_n.TG== node.type:
             return math.tan(self.get_value(node.left_child))
         elif Type_n.CTG == node.type:
-            return 1-math.tan(self.get_value(node.left_child))
+            return math.cos(self.get_value(node.left_child))/math.sin(self.get_value(node.left_child))
 
     #functia de apelare pt rezolvarea expresiei
     def rezolv(self, expression):
