@@ -52,6 +52,46 @@ class Node:
     right_child: any
     value: int = None
 
+
+class Lexer:
+    def __init__(self):
+        self.rpn_conv = TREE_Maker()
+
+    def Give_token(self, expr):
+
+        expr = self.rpn_conv.TREE(expr)
+        list = []
+
+        if expr:
+            for fact in expr:
+                if fact == "-":
+                    list.append(Token(Type_Tokens.SUB))
+                elif fact == "rad":
+                    list.append(Token(Type_Tokens.RAD))
+                elif fact == "log":
+                    list.append(Token(Type_Tokens.LOG))
+                elif fact == "+":
+                    list.append(Token(Type_Tokens.ADD))
+                elif fact == "*":
+                    list.append(Token(Type_Tokens.MUL))
+                elif fact == "/":
+                    list.append(Token(Type_Tokens.DIV))
+                elif fact.isdigit():
+                    list.append(Token(Type_Tokens.NUMBER, int(fact)))
+                elif fact == "^^":
+                    list.append(Token(Type_Tokens.POWER))
+                elif fact == "sin":
+                    list.append(Token(Type_Tokens.SIN))
+                elif fact == "cos":
+                    list.append(Token(Type_Tokens.COS))
+                elif fact == "tg":
+                    list.append(Token(Type_Tokens.TG))
+                elif fact == "ctg":
+                    list.append(Token(Type_Tokens.CTG))
+
+        return list
+
+
 def main():
 
     inter = Interpreter()
