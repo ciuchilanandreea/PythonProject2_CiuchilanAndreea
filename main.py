@@ -52,3 +52,17 @@ class Node:
     right_child: any
     value: int = None
 
+def main():
+
+    inter = Interpreter()
+    print()
+    print("                             Interpretor matematic")
+    print()
+    print("Acest interpretor realizeaza operatii cu +,-,/,*,^^,radical,logaritm,cos,sin,tg,ctg.")
+    print()
+    expr = input("Expresie:  ")
+    print("Rezultat: ", inter.rezolv(expr))
+
+
+if __name__ == "__main__":
+    main()
