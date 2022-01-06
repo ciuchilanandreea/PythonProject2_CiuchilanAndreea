@@ -173,11 +173,11 @@ class TREE_Maker:
                         list_op.append(string_expr)
                     else:
                         while string_expr in "+-*/":
-                            if list_op and string_expr in "+-" and( list_op[-1] in "+-*/" or list_op[-1] in STRING):
+                            if  string_expr in "+-" and  list_op and ( list_op[-1] in "+-*/" or list_op[-1] in STRING):
                                 tree.append(list_op.pop())
-                            elif list_op and string_expr in "*/" and ( list_op[-1] in "*/" or list_op[-1] in STRING):
+                            elif string_expr in "*/" and list_op and ( list_op[-1] in "*/" or list_op[-1] in STRING):
                                 tree.append(list_op.pop())
-                            elif list_op and (string_expr in STRING) and (list_op[-1] in STRING):
+                            elif (string_expr in STRING) and list_op and (list_op[-1] in STRING):
                                 tree.append(list_op.pop())
 
                             else:
@@ -185,11 +185,13 @@ class TREE_Maker:
                                 break
                     string_expr = self.nextnode(iter_expr)
                 else:
-                    print("Is unknown character")
+                    print("Unknown character")
                     return []
+            #verificam daca nr de paranteze este corect
             if paran != 0:
                 print("Syntax error 1")
                 return []
+            #introducem in tree lista creata
             while list_op:
                 tree.append(list_op.pop())
         return tree
