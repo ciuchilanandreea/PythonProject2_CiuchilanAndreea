@@ -1,4 +1,4 @@
-# PythonProject2_CiuchilanAndreea
+# PythonProject2_CiuchilanAndreea A3
 
 Sa se scrie un script care va primi de la linia de comanda o expresie matematica si
 returneaza rezultatul expresiei. Calculatorul va avea urmatoarele operatii: adunare, scadere,
