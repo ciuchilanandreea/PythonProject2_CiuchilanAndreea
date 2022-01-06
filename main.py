@@ -58,7 +58,7 @@ class Node:
 class Lexer:
     def __init__(self):
         self.arb = TREE_Maker()
-
+    # functia de atribuire de token-uri
     def Give_token(self, expr):
 
         expr = self.arb.TREE(expr)
@@ -90,7 +90,7 @@ class Lexer:
                     list.append(Token(Type_Tokens.TG))
                 elif fact == "ctg":
                     list.append(Token(Type_Tokens.CTG))
-
+        #returnam lista de token-uri pe care am creat-o
         return list
 
 # clasa in care construim arborele parcurgand expresia caracter cu caracter
