@@ -44,7 +44,7 @@ class Type_n(Enum):
     LOG = 11
     NUMBER = 12
 
-
+ # clasa pt noduri in care vom pastra tipul nodului, valoarea acestuia, fiul din stanga si fiul din dreapta
 @dataclass
 class Node:
     type: Type_n
@@ -53,13 +53,15 @@ class Node:
     value: int = None
 
 
+# vom realiza arborele si vom atribui fiecarui element cate un token
+
 class Lexer:
     def __init__(self):
-        self.rpn_conv = TREE_Maker()
+        self.arb = TREE_Maker()
 
     def Give_token(self, expr):
 
-        expr = self.rpn_conv.TREE(expr)
+        expr = self.arb.TREE(expr)
         list = []
 
         if expr:
