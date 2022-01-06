@@ -63,7 +63,7 @@ class Lexer:
 
         expr = self.arb.TREE(expr)
         list = []
-
+        # verificam ce tokenuri vor fi atribuite
         if expr:
             for fact in expr:
                 if fact == "-":
@@ -93,7 +93,9 @@ class Lexer:
 
         return list
 
-class TREE_Maker: #arborele e terminat
+# clasa in care construim arborele parcurgand expresia caracter cu caracter
+class TREE_Maker:
+
     def nextnode(self, exp_iter):
         try:
             return next(exp_iter)
@@ -101,31 +103,32 @@ class TREE_Maker: #arborele e terminat
             return None
 
     def TREE(self, expression):
+
         tree = []
         if expression:
             iter_expr = iter(expression)
             paran = 0
             string_expr = self.nextnode(iter_expr)
             list_op = []
-
+            # cat timp sunt spatii si enter-uri le ignoram
             while string_expr:
                 if string_expr in SPACE:
                     string_expr = self.nextnode(iter_expr)
                     continue
-
-
+                # calculam cate paranteze ) avem
                 elif ")" ==string_expr:
-                    while list_op and list_op[-1] != "(":
+                    while list_op[-1] != "(" and  list_op:
                         tree.append(list_op.pop())
                     if list_op:
                         list_op.pop()
-                    string_expr = self.nextnode(iter_expr)
                     paran -= 1
+                    string_expr = self.nextnode(iter_expr)
 
                 elif "("==string_expr:
+                    paran += 1
                     list_op.append(string_expr)
                     string_expr = self.nextnode(iter_expr)
-                    paran += 1
+
 
 
                 elif string_expr in STRING:
