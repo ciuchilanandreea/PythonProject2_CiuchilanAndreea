@@ -90,6 +90,47 @@ class Lexer:
                     list.append(Token(Type_Tokens.CTG))
 
         return list
+class Interpreter:
+    def __init__(self):
+        self.parser = Parser()
+
+    def get_value(self, node):
+        if  Type_n.MUL== node.type:
+            return self.get_value(node.right_child) * self.get_value(node.left_child)
+        elif  Type_n.SUB== node.type:
+            return self.get_value(node.right_child) - self.get_value(node.left_child)
+        elif Type_n.RAD== node.type:
+            return math.sqrt(self.get_value(node.left_child))
+        elif Type_n.LOG == node.type:
+            return math.log10(self.get_value(node.left_child))
+        elif  Type_n.DIV== node.type:
+            return self.get_value(node.right_child) / self.get_value(node.left_child)
+        elif  Type_n.NUMBER== node.type:
+            return node.value
+        elif  Type_n.ADD== node.type:
+            return self.get_value(node.right_child) + self.get_value(node.left_child)
+        elif Type_n.POWER == node.type:
+            return self.get_value(node.right_child) ** self.get_value(node.left_child)
+        elif Type_n.SIN == node.type:
+            return math.sin(self.get_value(node.left_child))
+        elif  Type_n.COS==node.type:
+            return math.cos(self.get_value(node.left_child))
+        elif  Type_n.TG== node.type:
+            return math.tan(self.get_value(node.left_child))
+        elif Type_n.CTG == node.type:
+            return 1-math.tan(self.get_value(node.left_child))
+
+
+    def rezolv(self, expression):
+        rez = self.parser.parse(expression)
+        if rez:
+            if Type_n.NUMBER== rez.type:
+                return rez.value
+            try:
+                return self.get_value(rez)
+            except AttributeError:
+                print("Syntax error")
+        return ""
 
 
 def main():
